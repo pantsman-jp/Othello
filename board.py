@@ -1,10 +1,11 @@
-def init_board():
+def init_board(n):
     """
-    8x8の盤面を作る。
+    nxn の盤面を作る。
+    n は6以上の偶数を想定する
     """
-    xss = [[0] * 8 for _ in range(8)]
-    xss[3][4] = xss[4][3] = 1
-    xss[3][3] = xss[4][4] = 2
+    xss = [[0] * n for _ in range(n)]
+    xss[n // 2 - 1][n // 2] = xss[n // 2][n // 2 - 1] = 1
+    xss[n // 2 - 1][n // 2 - 1] = xss[n // 2][n // 2] = 2
     return xss
 
 
@@ -26,17 +27,28 @@ def convert(n):
 
 def print_board(board):
     """
-    盤面表示をする
+    インデックス付きで盤面表示をする
     白は ●、黒は ○
     """
-    print("  0 1 2 3 4 5 6 7")
+    print("  " + " ".join(map(str, range(len(board)))))
     for [i, xs] in enumerate(board):
         print(str(i) + " " + " ".join(map(convert, xs)))
 
 
-def get_neighbors(y, x):
+def in_range(n, m):
+    """整数 m は 0 以上 n 未満か?"""
+    return 0 <= m < n
+
+
+def all_in_range(n, pos):
+    """座標のリスト pos の各要素は in_range を満たすか?"""
+    return all(in_range(n, p) for p in pos)
+
+
+def get_neighbors(n, y, x):
     """
     注目マスの8近傍の座標を返す
+    n は盤面の一辺の長さ
     8x8 の範囲外のものは除く
     """
     ret = []
@@ -44,11 +56,20 @@ def get_neighbors(y, x):
         for i in range(-1, 2):
             if (j == 0) and (i == 0):
                 continue
-            new_y, new_x = y + j, x + i
-            if (-1 < new_x < 8) and (-1 < new_y < 8):
-                ret += [[new_y, new_x]]
+            pos = [y + j, x + i]
+            if all_in_range(n, pos):
+                ret += [pos]
     return ret
 
 
-print_board(init_board())
-print(get_neighbors(0, 0))
+def get_line(n, y, x, vy, vx):
+    """
+    注目マス(y,x)から、ベクトル(vy,vx)方向のマスを列挙する
+    n は盤面の一辺の長さ
+    """
+    return
+
+
+n = 10
+print_board(init_board(n))
+print(get_neighbors(n, 9, 9))
