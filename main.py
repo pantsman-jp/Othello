@@ -1,19 +1,24 @@
+debug = True
+
+
 def init_board(n):
     """
     nxn の盤面を作る。
     n は6以上の偶数を想定する
     """
     xss = [[0] * n for _ in range(n)]
-    xss[n // 2 - 1][n // 2] = xss[n // 2][n // 2 - 1] = 1
-    xss[n // 2 - 1][n // 2 - 1] = xss[n // 2][n // 2] = 2
+    div2 = n // 2
+    div2_1 = div2 - 1
+    xss[div2_1][div2] = xss[div2][div2_1] = 1
+    xss[div2_1][div2_1] = xss[div2][div2] = 2
     return xss
 
 
 def convert(n):
     """
     0 -> スペース
-    1 -> ●
-    2 -> ○
+    1 -> ●（白）
+    2 -> ○（黒）
     に変換
     """
     if n == 0:
@@ -65,11 +70,49 @@ def get_neighbors(n, y, x):
 def get_line(n, y, x, vy, vx):
     """
     注目マス(y,x)から、ベクトル(vy,vx)方向のマスを列挙する
+    （注目マスは含まない）
     n は盤面の一辺の長さ
     """
-    return
+    pos = [y + vy, x + vx]
+    if all_in_range(n, pos):
+        return [pos] + get_line(n, *pos, vy, vx)
+    return []
 
 
-n = 10
-print_board(init_board(n))
-print(get_neighbors(n, 9, 9))
+def opponent(player):
+    return [2, 1][player - 1]
+
+
+# TODO
+def is_legal_move(board, y, x, player):
+    if board[y][x] != 0:
+        return False
+
+
+def count_stones(board):
+    """return [黒石の数, 白石の数]"""
+    ret = [0, 0]
+    for xs in board:
+        for x in xs:
+            if x == 0:
+                pass
+            else:
+                ret[x - 1] += 1
+    return ret
+
+
+def game_over(board):
+    return sum(count_stones(board)) == len(board) ** 2
+
+
+def test(debug):
+    if debug:
+        n = 8
+        board = init_board(n)
+        print_board(board)
+        # print(get_neighbors(n, 9, 9))
+        # print(get_line(n, 0, 0, 1, 1))
+        print(count_stones(board))
+
+
+test(debug)
