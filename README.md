@@ -10,9 +10,15 @@ A simple console-based Python implementation of Othello (Reversi)
 - Board display via console output
 
 ## Installation
-Download from <https://github.com/pantsman-jp/>
+Download from <https://github.com/pantsman-jp/Othello>
 
 ## Usage
+require `Python3`
+
+to play...
+```
+python3 main.py
+```
 
 ## License
 Copyright © 2025 pantsman
