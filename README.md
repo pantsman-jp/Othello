@@ -13,11 +13,13 @@ A simple console-based Python implementation of Othello (Reversi)
 Download from <https://github.com/pantsman-jp/Othello>
 
 ## Usage
-require `Python3`
+Require `Python3`.
 
-to play...
+It's best to keep the terminal background color white.
+
+To play...
 ```
-python3 main.py
+% python3 main.py
 ```
 
 ## License
