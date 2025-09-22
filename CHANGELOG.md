@@ -1,5 +1,9 @@
 # Othello - Changelog
 
+## v0.2.0 (2025-09-22)
+- ADDED : `play_game`
+- Known Bug : legal moves are being judged as illegal
+
 ## v0.1.1 (2025-09-21)
 - ADDED : some utils functions
 - CHANGED : `board.py` -> `main.py`

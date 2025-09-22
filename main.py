@@ -1,6 +1,3 @@
-debug = True
-
-
 def init_board(n):
     """
     nxn の盤面を作る。
@@ -79,14 +76,51 @@ def get_line(n, y, x, vy, vx):
     return []
 
 
+def get_all_direction():
+    """return [[vy, vx], ...]"""
+    return [
+        [vy, vx] for vx in [-1, 0, 1] for vy in [-1, 0, 1] if not [vy, vx] == [0, 0]
+    ]
+
+
 def opponent(player):
     return [2, 1][player - 1]
 
 
-# TODO
+# TODO Fix
+def valid_directions(board, y, x, player):
+    """
+    player が (y,x) に置いたとき，相手の石をひっくり返せる方向ベクトルのリストを返す
+    """
+    n = len(board)
+    ret = []
+    for [vy, vx] in get_all_direction():
+        line = get_line(n, y, x, vy, vx)
+        if line == []:
+            continue
+        if board[line[0][0]][line[0][1]] != opponent(player):
+            continue
+        stones = [board[yy][xx] for [yy, xx] in line]
+        if (player in stones) and (stones.index(player) >= 1):
+            ret += [[vy, vx]]
+    return ret
+
+
 def is_legal_move(board, y, x, player):
-    if board[y][x] != 0:
-        return False
+    """player が位置 y, x に石を置こうとするのは合法か？"""
+    return valid_directions(board, y, x, player) != []
+
+
+def legal_moves(board, player):
+    """合法手の列挙"""
+    n = len(board)
+    return [
+        [y, x] for y in range(n) for x in range(n) if is_legal_move(board, y, x, player)
+    ]
+
+
+def game_over(board):
+    return all(legal_moves(board, player) == [] for player in [1, 2])
 
 
 def count_stones(board):
@@ -101,8 +135,57 @@ def count_stones(board):
     return ret
 
 
-def game_over(board):
-    return sum(count_stones(board)) == len(board) ** 2
+def apply_move(board, y, x, player):
+    """
+    player の石を y, x に置き、ひっくり返せる相手の石を全てひっくり返す。
+    player の石が y, x に置かれることは is_legal_move で合法だとする。
+    """
+    board[y][x] = player
+    n = len(board)
+    for [vy, vx] in valid_directions(board, y, x, player):
+        for [yy, xx] in get_line(n, y, x, vy, vx):
+            board[yy][xx] = player
+    return board
+
+
+def who(player):
+    return {1: "黒(○)", 2: "白(●)"}[player]
+
+
+def play_game():
+    """黒(○)は 1 白(●)は 2"""
+    n = int(input("盤面のサイズを入力（6以上の偶数）: "))
+    board = init_board(n)
+    player = 1
+    while not game_over(board):
+        print_board(board)
+        print(who(player) + " の手番")
+        moves = legal_moves(board, player)
+        if moves == []:
+            print("打てる手がないのでパスします。")
+            player = opponent(player)
+            continue
+        while True:
+            try:
+                print("どこに石をおきますか")
+                y = int(input("y座標(行): "))
+                x = int(input("x座標(列): "))
+                if [y, x] in moves:
+                    break
+                print("合法手ではありません。もう一度入力してください。")
+            except ValueError:
+                print("数値を入力してください。")
+        apply_move(board, y, x, player)
+        player = opponent(player)
+    black, white = count_stones(board)
+    print_board(board)
+    print("ゲーム終了! 黒: ", black, "白: ", white)
+    if black > white:
+        print("黒の勝ち!")
+    elif white > black:
+        print("白の勝ち!")
+    else:
+        print("引き分け!")
 
 
 def test(debug):
@@ -112,7 +195,9 @@ def test(debug):
         print_board(board)
         # print(get_neighbors(n, 9, 9))
         # print(get_line(n, 0, 0, 1, 1))
-        print(count_stones(board))
+        # print(count_stones(board))
+        print(is_legal_move(board, 3, 2, 1))
 
 
-test(debug)
+test(debug=False)
+play_game()
