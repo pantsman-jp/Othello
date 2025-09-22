@@ -1,5 +1,12 @@
 # Othello - Changelog
 
+## Unreleased
+- pygame
+- vs. CPU
+
+## v0.2.1 (2025-09-22)
+- FIXED : known bug (It's now playable normally)
+
 ## v0.2.0 (2025-09-22)
 - ADDED : `play_game`
 - Known Bug : legal moves are being judged as illegal
