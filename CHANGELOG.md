@@ -4,6 +4,10 @@
 - pygame
 - vs. CPU
 
+## v0.2.2 (2025-09-26)
+- CHANGED : include `4` in the size of the board (`n`)
+- FIXED : refactoring
+
 ## v0.2.1 (2025-09-22)
 - FIXED : known bug (It's now playable normally)
 - CHANGED : swap the black and white display

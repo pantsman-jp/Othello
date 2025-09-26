@@ -24,7 +24,6 @@ def convert(n):
         return "●"
     if n == 2:
         return "○"
-    raise Exception("convert()", "引数が 0 か 1 か 2 ではありません", n)
 
 
 def print_board(board):
@@ -60,7 +59,7 @@ def get_neighbors(n, y, x):
                 continue
             pos = [y + j, x + i]
             if all_in_range(n, pos):
-                ret.append(pos)
+                ret += [pos]
     return ret
 
 
@@ -77,13 +76,13 @@ def get_line(n, y, x, vy, vx):
 
 def get_all_direction():
     """return [[vy, vx], ...]"""
-    return [
-        [vy, vx] for vx in [-1, 0, 1] for vy in [-1, 0, 1] if not (vy == 0 and vx == 0)
-    ]
+    return [[vy, vx] for vx in [-1, 0, 1] for vy in [-1, 0, 1] if not vy == vx == 0]
 
 
 def opponent(player):
-    return 2 if player == 1 else 1
+    if player == 1:
+        return 2
+    return 1
 
 
 def valid_directions(board, y, x, player):
@@ -93,15 +92,14 @@ def valid_directions(board, y, x, player):
     """
     n = len(board)
     dirs = []
-    for vy, vx in get_all_direction():
-        line = get_line(n, y, x, vy, vx)
+    for [vy, vx] in get_all_direction():
         flipped = []
-        for yy, xx in line:
+        for [yy, xx] in get_line(n, y, x, vy, vx):
             if board[yy][xx] == opponent(player):
-                flipped.append([yy, xx])
+                flipped += [[yy, xx]]
             elif board[yy][xx] == player:
-                if flipped:
-                    dirs.append([vy, vx])
+                if flipped != []:
+                    dirs += [[vy, vx]]
                 break
             else:
                 break
@@ -111,7 +109,7 @@ def valid_directions(board, y, x, player):
 def is_legal_move(board, y, x, player):
     """player が位置 y,x に石を置こうとするのは合法か？"""
     n = len(board)
-    if not in_range(n, y) or not in_range(n, x):
+    if (not in_range(n, y)) or (not in_range(n, x)):
         return False
     if board[y][x] != 0:
         return False
@@ -147,11 +145,10 @@ def apply_move(board, y, x, player):
     player の石を y,x に置き，
     ひっくり返せる相手の石を全てひっくり返す
     """
-    dirs = valid_directions(board, y, x, player)
     board[y][x] = player
     n = len(board)
-    for vy, vx in dirs:
-        for yy, xx in get_line(n, y, x, vy, vx):
+    for [vy, vx] in valid_directions(board, y, x, player):
+        for [yy, xx] in get_line(n, y, x, vy, vx):
             if board[yy][xx] == player:
                 break
             board[yy][xx] = player
@@ -164,7 +161,10 @@ def who(player):
 
 def play_game():
     """黒(●)=1、白(○)=2"""
-    n = int(input("盤面のサイズを入力（6以上の偶数）: "))
+    n = int(input("盤面のサイズを入力（4以上の偶数）: "))
+    if (n < 4) or (n % 2 == 1):
+        print("4以上の偶数を入力してください。")
+        play_game()
     board = init_board(n)
     player = 1
     while not game_over(board):
