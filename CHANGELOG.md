@@ -4,6 +4,10 @@
 - pygame
 - vs. CPU
 
+## v0.3.0 (2025-10-06)
+- CHANGED : file structure
+- CHANGED : set the board size to `8x8`
+
 ## v0.2.2 (2025-09-26)
 - CHANGED : include `4` in the size of the board (`n`)
 - FIXED : refactoring
