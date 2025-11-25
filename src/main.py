@@ -1,6 +1,6 @@
-from board import init_board, print_board, count_stones
-from rules import game_over, legal_moves, apply_move, is_legal_move
-from utils import opponent
+from src.board import init_board, print_board, count_stones
+from src.rules import game_over, legal_moves, apply_move, is_legal_move
+from src.utils import opponent
 
 
 def who(player):

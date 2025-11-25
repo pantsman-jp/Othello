@@ -19,7 +19,7 @@ It's best to keep the terminal background color white.
 
 To play...
 ```
-% python3 main.py
+% python3 -m src.main
 ```
 
 ## License

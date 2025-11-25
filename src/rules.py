@@ -1,4 +1,4 @@
-from utils import get_all_direction, get_line, opponent, in_range
+from src.utils import get_all_direction, get_line, opponent, in_range
 
 
 def valid_directions(board, y, x, player):
