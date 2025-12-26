@@ -11,7 +11,8 @@ with a graphical interface using `pygame`.
 - Highlights legal moves for the current player
 
 ## Download
-Pre-built executables for macOS are available on the [Releases page](https://github.com/pantsman-jp/Othello/releases/tag/v1.0.0).
+Pre-built executables for macOS are available on the
+[Releases page](https://github.com/pantsman-jp/Othello/releases/tag/v1.0.0).
 
 - `Othello` : terminal executable
 - `Othello.app.zip` : GUI application bundle
