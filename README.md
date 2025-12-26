@@ -10,6 +10,12 @@ with a graphical interface using `pygame`.
 - Displays the board graphically with black and white stones
 - Highlights legal moves for the current player
 
+## Download
+Pre-built executables for macOS are available on the [Releases page](https://github.com/pantsman-jp/Othello/releases/tag/v1.0.0).
+
+- `Othello` : terminal executable
+- `Othello.app.zip` : GUI application bundle
+
 ## Installation
 Download from <https://github.com/pantsman-jp/Othello>
 
