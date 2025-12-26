@@ -1,8 +1,13 @@
 # Othello - Changelog
 
 ## Unreleased
-- pygame
 - vs. CPU
+
+## v1.0.0 (2025-12-26)
+- ADDED : GUI with `pygame`
+- ADDED : legal move highlights
+- CHANGED : console-based play replaced with graphical interface
+- CHANGED : mouse click input instead of console input
 
 ## v0.3.0 (2025-10-06)
 - CHANGED : file structure

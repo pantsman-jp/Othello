@@ -1,23 +1,27 @@
 # Othello / pantsman
 
-## This App is...
-A simple console-based Python implementation of Othello (Reversi)
+## About
+This is a simple Python implementation of Othello (Reversi)
+with a graphical interface using `pygame`.
 
 ## Features
-- Supports boards of any even size (6 or more)
-- Valid move detection and pass handling
-- Stone flip processing and win/loss determination
-- Board display via console output
+- Detects valid moves and supports automatic pass if no moves available
+- Correctly flips opponent stones according to Othello rules
+- Displays the board graphically with black and white stones
+- Highlights legal moves for the current player
 
 ## Installation
 Download from <https://github.com/pantsman-jp/Othello>
 
 ## Usage
-Require `Python3`.
+Require `Python3`, `pygame`.
 
-It's best to keep the terminal background color white.
+To install `pygame`:
+```
+pip install pygame
+```
 
-To play...
+To play:
 ```
 % python3 -m src.main
 ```
